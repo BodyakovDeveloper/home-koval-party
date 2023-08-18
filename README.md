@@ -9,14 +9,14 @@ use command `docker compose up`
 to see the availiable endpoints you should open `http://localhost:8080/swagger-ui/index.html#/`
 
 There are two predefined users:
-  role "editor": 
-    `{ 
-      "username": "editor", 
-      "password": "123" 
-    }`
-  role "user": 
-    `{ 
-      "username": "user", 
-      "password": "123" 
-    }`
+  role "editor": <br>
+    `{ <br>
+      "username": "editor", <br>
+      "password": "123" <br>
+    }`<br>
+  role "user": <br>
+    `{ <br>
+      "username": "user", <br>
+      "password": "123" <br>
+    }`<br>
 use it in auth endpoint
