@@ -11,12 +11,12 @@ to see the availiable endpoints you should open `http://localhost:8080/swagger-u
 There are two predefined users:
   role "editor": <br>
     `{ <br>
-      "username": "editor", <br>
-      "password": "123" <br>
+      "username": "editor", `<br>`
+      "password": "123"` <br>`
     }`<br>
   role "user": <br>
-    `{ <br>
-      "username": "user", <br>
-      "password": "123" <br>
+    `{ `<br>`
+      "username": "user", `<br>`
+      "password": "123" `<br>`
     }`<br>
 use it in auth endpoint
