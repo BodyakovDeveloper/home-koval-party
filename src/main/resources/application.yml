@@ -21,3 +21,9 @@ logging:
 springdoc:
   swagger-ui:
     tagsSorter: alpha
+
+aws:
+  region: eu-north-1
+  access-key: AKIASPIDHS6XF4TU32WS
+  secret-access-key: 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
+  s3-bucket-name: home-koval-countries-flags
