@@ -3,6 +3,7 @@ package com.koval.homedemo.controller;
 import com.koval.homedemo.payload.request.UpdateCityNameRequest;
 import com.koval.homedemo.payload.response.CityResponse;
 import com.koval.homedemo.service.CityService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,15 +22,15 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class CityController {
 
     private final CityService cityService;
 
     @GetMapping("cities")
     @PreAuthorize("hasAnyRole('USER', 'EDITOR')")
-    public ResponseEntity<Page<CityResponse>> getCities(Pageable pageRequest) {
-        Page<CityResponse> paginatedCitiesWithLogos = cityService.getPaginatedCitiesWithLogos(pageRequest);
-        return ResponseEntity.ok(paginatedCitiesWithLogos);
+    public Page<CityResponse> getCities(Pageable pageRequest) {
+        return cityService.getPaginatedCitiesWithLogos(pageRequest);
     }
 
     @GetMapping("{countryName}/cities")

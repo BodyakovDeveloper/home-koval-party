@@ -5,10 +5,12 @@ spring:
     password: root
   liquibase:
     enabled: true
-
-token:
-  signing:
-    key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351
+  jpa:
+    show-sql: true
+  servlet:
+    multipart:
+      max-request-size: 10MB
+      max-file-size: 10MB
 
 logging:
   level:
@@ -21,3 +23,7 @@ logging:
 springdoc:
   swagger-ui:
     tagsSorter: alpha
+
+token:
+  signing:
+    key: 413F4428472B4B6250655368566D5970337336763979244226452948404D6351

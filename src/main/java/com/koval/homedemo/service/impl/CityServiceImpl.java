@@ -10,6 +10,7 @@ import com.koval.homedemo.service.CityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,14 @@ public class CityServiceImpl implements CityService {
     @Transactional(readOnly = true)
     @Override
     public Page<CityResponse> getPaginatedCitiesWithLogos(Pageable pageable) {
-        return cityRepository.findAll(pageable).map(cityMapper::toCityResponse);
+        log.debug("Start getting cities from pageable={}", pageable);
+
+        List<City> cities = cityRepository.findCitiesWithCountry(pageable);
+        List<CityResponse> cityResponses = cities.stream()
+                .map(cityMapper::toCityResponse)
+                .toList();
+
+        return new PageImpl<>(cityResponses, pageable, cities.size());
     }
 
     @Override
@@ -46,14 +54,20 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CityResponse> getAllByCountryName(String countryName) {
-        List<City> allByCountryName = cityRepository.findAllByCountryName(countryName);
-        return cityMapper.toCityResponse(allByCountryName);
+        log.debug("Start getting cities from countryName={}", countryName);
+
+        List<City> citiesWithCountry = cityRepository.findAllByCountryNameWithCountry(countryName);
+        return cityMapper.toCityResponse(citiesWithCountry);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CityResponse> searchCityByName(String nameContaining) {
-        List<City> cities = cityRepository.searchCitiesByNameContaining(nameContaining);
-        return cityMapper.toCityResponse(cities);
+        log.debug("Start searching cities from nameContaining={}", nameContaining);
+
+        List<City> citiesWithCountry = cityRepository.searchCitiesByNameContainingWithCountry(nameContaining);
+        return cityMapper.toCityResponse(citiesWithCountry);
     }
 }
