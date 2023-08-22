@@ -5,6 +5,7 @@ import com.koval.homedemo.payload.response.CityResponse;
 import com.koval.homedemo.service.CityService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1")
 @RequiredArgsConstructor
@@ -30,26 +32,44 @@ public class CityController {
     @GetMapping("cities")
     @PreAuthorize("hasAnyRole('USER', 'EDITOR')")
     public Page<CityResponse> getCities(Pageable pageRequest) {
-        return cityService.getPaginatedCitiesWithLogos(pageRequest);
+        log.debug("CityController getCities starts with pageRequest={}", pageRequest);
+
+        Page<CityResponse> cities = cityService.getPaginatedCitiesWithLogos(pageRequest);
+
+        log.debug("CityController getCities ends, returning cities={}", cities);
+        return cities;
     }
 
     @GetMapping("{countryName}/cities")
     @PreAuthorize("hasAnyRole('USER', 'EDITOR')")
     public ResponseEntity<List<CityResponse>> getCities(@PathVariable("countryName") String countryName) {
+        log.debug("CityController getCities starts with countryName={}", countryName);
+
         List<CityResponse> allByCountryName = cityService.getAllByCountryName(countryName);
+
+        log.debug("CityController getCities ends, returning cityResponses={}", allByCountryName);
         return ResponseEntity.ok(allByCountryName);
     }
 
     @GetMapping("cities/search")
     @PreAuthorize("hasAnyRole('USER', 'EDITOR')")
     public ResponseEntity<List<CityResponse>> searchCities(@RequestParam("nameContaining") String nameContaining) {
+        log.debug("CityController searchCities starts with nameContaining={}", nameContaining);
+
         List<CityResponse> cityResponses = cityService.searchCityByName(nameContaining);
+
+        log.debug("CityController searchCities ends, returning cityResponses={}", cityResponses);
         return ResponseEntity.ok(cityResponses);
     }
 
     @PatchMapping("cities")
     @PreAuthorize("hasRole('EDITOR')")
     public ResponseEntity<CityResponse> updateCountry(@RequestBody UpdateCityNameRequest updateCityNameRequest) {
-        return ResponseEntity.ok(cityService.updateName(updateCityNameRequest));
+        log.debug("CityController updateCountry starts with updateCityNameRequest={}", updateCityNameRequest);
+
+        CityResponse response = cityService.updateName(updateCityNameRequest);
+
+        log.debug("CityController updateCountry ends, returning response={}", response);
+        return ResponseEntity.ok(response);
     }
 }
