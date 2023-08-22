@@ -1,14 +1,90 @@
-<h5>home-koval-party</h4>
-,,
-<h2>Hi there</h2>
+# Project Name Readme
 
-<h3>To run the application with database you need to have Docker installed on your pc</h3>
+Welcome to **Project Name**! This repository contains an application built with a modern tech stack for [describe what the application does briefly].
 
-use command `docker compose up`
+## Table of Contents
 
-to see the available endpoints you should open `http://localhost:8080/swagger-ui/index.html#/`
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+- [Usage](#usage)
+- [Tech Stack](#tech-stack)
+- [Endpoints](#endpoints)
+- [Authentication](#authentication)
 
-There are two predefined users:<br><br>
+## Getting Started
+
+Project Overview
+Welcome to the Country and City List application! This enterprise-grade application is designed to provide users with an intuitive way to interact with a vast collection of cities and countries.
+
+<br>The application's core features empower users to:
+
+<ul>Browse through a paginated list of cities, complete with logos.</ul>
+
+<ul>Discover unique city names, enabling quick exploration.</ul>
+<ul>Retrieve all sites based on a selected country name.</ul>
+<ul>Search for cities by their names, facilitating efficient navigation.</ul>
+<ul>Edit city details, including names and logos (limited to users with the "EDITOR" role).</ul>
+
+
+Follow these instructions to get the project up and running on your local machine.
+
+### Prerequisites
+
+Make sure you have the following tools installed:
+
+- Docker ([Install Docker](https://docs.docker.com/get-docker/))
+
+### Installation
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/BodyakovDeveloper/home-koval-party.git
+Navigate to the project directory:
+
+bash
+Copy code
+   ```bash
+  cd project-name
+   ```
+Run the application and database using Docker:
+
+
+bash
+Copy code
+  ```bash
+docker-compose up
+```
+This will set up the required services and dependencies.
+
+Usage
+After successfully starting the application, you can access the available endpoints through the Swagger UI:
+
+Open your web browser and go to http://localhost:8080/swagger-ui/index.html#/
+## Tech Stack
+
+The project utilizes the following technologies and libraries:
+
+- **Spring Boot**: Framework for building robust Java applications.
+- **Spring Data JPA**: Provides easy integration with databases using the Java Persistence API.
+- **Spring Security**: Ensures security features like authentication and authorization.
+- **Spring Validation**: Adds validation support for request data.
+- **JWT**: JSON Web Token for secure communication.
+- **PostgreSQL**: Relational database management system.
+- **Liquibase**: Database migration and version control tool.
+- **Lombok**: Reduces boilerplate code.
+- **MapStruct**: Simplifies Java bean mappings.
+- **JUnit**: Testing framework.
+- **Testcontainers**: Provides lightweight, disposable containers for integration testing.
+- **SpringDoc**: Generates API documentation using Spring Web MVC and Swagger UI.
+
+Endpoints
+The application exposes various endpoints for different functionalities. Please refer to the Swagger UI for a complete list of available endpoints and their descriptions.
+
+Authentication
+The application uses JWT-based authentication. You can use the following predefined users for testing:
+
 role "EDITOR":
 
 ```
@@ -27,4 +103,4 @@ role "USER":
 }
 ```
 
-use it in auth endpoint
+You can use these credentials to interact with the authentication endpoint.
