@@ -1,4 +1,4 @@
-package com.koval.homedemo.service.impl;
+package com.koval.homedemo.controller;
 
 import com.koval.homedemo.TestDataProvider;
 import com.koval.homedemo.payload.response.CityResponse;

@@ -1,4 +1,4 @@
-package com.koval.homedemo.service.impl;
+package com.koval.homedemo.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koval.homedemo.TestDataProvider;
@@ -10,7 +10,6 @@ import com.koval.homedemo.service.CityService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -91,54 +90,5 @@ public class CityControllerIntegrationTest {
         City updatedCity = cityRepository.findById(city.getId()).orElse(null);
         assertNotNull(updatedCity);
         assertEquals("New City Name", updatedCity.getName());
-    }
-
-
-    @Test
-    public void testGetCities() throws Exception {
-        Pageable pageable = PageRequest.of(0, 10);
-        List<CityResponse> cityResponses = TestDataProvider.getCityResponses();
-
-        Page<CityResponse> page = new PageImpl<>(cityResponses, pageable, cityResponses.size());
-
-        given(cityService.getPaginatedCitiesWithLogos(pageable)).willReturn(page);
-
-        mockMvc.perform(get("/api/v1/cities"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content", hasSize(cityResponses.size())))
-                .andExpect(jsonPath("$.content[0].name").value(cityResponses.get(0).getName()));
-
-        verify(cityService, times(1)).getPaginatedCitiesWithLogos(pageable);
-    }
-
-    @Test
-    public void testGetCitiesByCountry() throws Exception {
-        String countryName = "TestCountry";
-        List<CityResponse> cityResponses = TestDataProvider.getCityResponses();
-
-        given(cityService.getAllByCountryName(countryName)).willReturn(cityResponses);
-
-        mockMvc.perform(get("/api/v1/{countryName}/cities", countryName))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(cityResponses.size())))
-                .andExpect(jsonPath("$[0].name").value(cityResponses.get(0).getName()));
-
-        verify(cityService, times(1)).getAllByCountryName(countryName);
-    }
-
-    @Test
-    public void testSearchCities() throws Exception {
-        String cityName = "TestCity";
-        List<CityResponse> cityResponses = TestDataProvider.getCityResponses();
-
-        given(cityService.searchCityByName(cityName)).willReturn(cityResponses);
-
-        mockMvc.perform(get("/api/v1/cities/search")
-                        .param("nameContaining", cityName))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(cityResponses.size())))
-                .andExpect(jsonPath("$[0].name").value(cityResponses.get(0).getName()));
-
-        verify(cityService, times(1)).searchCityByName(cityName);
     }
 }
